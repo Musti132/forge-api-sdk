@@ -15,5 +15,11 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require-dev": {
+        "symfony/var-dumper": "6.1.x-dev",
+        "illuminate/support": "9.x-dev"
+    },
+    "require": {
+        "guzzlehttp/guzzle": "7.4.x-dev"
+    }
 }
