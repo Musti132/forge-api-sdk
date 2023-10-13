@@ -5,7 +5,6 @@ use Musti\ForgeApi\Api\ApiFactory;
 use Musti\ForgeApi\Http\ClientFactory;
 
 Class Factory {
-    public static $instance = null;
 
     /**
      * @param string $apiKey
@@ -30,7 +29,7 @@ Class Factory {
      * @param array $options
      * 
      */
-    public static function createHttpClient(string $apiKey, array $options = []): void {
+    private function createHttpClient(string $apiKey, array $options = []): void {
         ClientFactory::createClient($apiKey, $options);
     }
 
@@ -40,7 +39,7 @@ Class Factory {
      * @param string $apiKey
      * 
      */
-    public static function setApiKey(string $apiKey): void {
+    private static function setApiKey(string $apiKey): void {
         ApiFactory::setApiKey($apiKey);
     }
 }

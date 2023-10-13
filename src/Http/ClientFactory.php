@@ -2,15 +2,16 @@
 namespace Musti\ForgeApi\Http;
 
 class ClientFactory {
-    public static $client;
 
-    public static function createClient(string $apiKey, array $options = []) {
-        self::$client = new Client($apiKey, $options);
+    /**
+     * 
+     * @param string $apiKey
+     * @param array $options
+     * 
+     * @return Musti\ForgeApi\Http\Client
+     */
+    public static function createClient(string $apiKey, array $options = []) : Client {
+        return new Client($apiKey, $options)
     }
-
-    public static function getClient() {
-        return self::$client;
-    }
-    
 }
 ?>
