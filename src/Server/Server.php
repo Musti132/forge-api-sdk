@@ -15,8 +15,8 @@ class Server implements RequestInterface
         ManageDatabase,
         ManageDatabaseUsers;
 
-    protected $pathName = "servers";
-    protected $childPath = "";
+    private $pathName = "servers";
+    
     protected $id;
     protected $siteId;
 

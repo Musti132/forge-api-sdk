@@ -1,6 +1,10 @@
 <?php
 namespace Musti\ForgeApi\Interfaces;
 
+/**
+ * @property string $pathName
+ * @property string $childPath;
+ */
 interface RequestInterface {
     public function __construct();
 

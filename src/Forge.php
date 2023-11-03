@@ -9,6 +9,7 @@ use ReflectionClass;
 
 class Forge
 {
+    private Client $client;
 
     /**
      * Create factory object, and load HttpClient
@@ -16,19 +17,17 @@ class Forge
      * @param string $apiKey
      * @param array $options Options for guzzlehttp client
      */
-    public function __construct(string $apiKey, array $options = []) {
-        Factory::init($apiKey, $options);
+    public function __construct(string $apiKey, array $httpOptions = []) {
+        $this->client = Factory::createHttpClient($apiKey, $httpOptions);
     }
     /**
      * Get authenticated user information
      * 
      * @return Musti\ForgeApi\User\User;
      */
-    public function me()
+    public function user(bool $asObject = false) : User
     {
-        $user = new User();
-
-        return $user->me();
+        return new User($asObject);
     }
 
     public function __call($name, $args): Object
