@@ -1,10 +1,18 @@
 <?php
 namespace Musti\ForgeApi\Http;
 
+use Musti\ForgeApi\Exceptions\BadRequestException;
+use Musti\ForgeApi\Exceptions\ForgeOfflineException;
+use Musti\ForgeApi\Exceptions\InternalServerErrorException;
+use Musti\ForgeApi\Exceptions\InvalidAPIKeyException;
+use Musti\ForgeApi\Exceptions\NotFoundException;
+use Musti\ForgeApi\Exceptions\TooManyRequestsException;
+use Musti\ForgeApi\Exceptions\UnprocessableEntityException;
 use Musti\ForgeApi\Http\HasRequests;
 use GuzzleHttp\Client as HttpClient;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
+use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 
 class Client {
@@ -44,15 +52,13 @@ class Client {
         $this->options = $this->options ?? $options;
 
         $this->setupClient();
-
-        return;
     }
 
     public function setApiKey(string $apiKey) {
         $this->apiKey = $apiKey;
     }
 
-    public function setupClient(){
+    public function setupClient() : HttpClient{
         $this->client = new HttpClient([
             'base_uri' => $this->baseUri,
             'http_errors' => false,
@@ -67,7 +73,7 @@ class Client {
         return $this->client;
     }
 
-    public function getHandlerStack() {
+    public function getHandlerStack() : HandlerStack {
         $stack = HandlerStack::create();
 
         $stack->push(
@@ -83,7 +89,14 @@ class Client {
         return $stack;
     }
 
-    public function handleResponse($response) : void
+    /**
+     * Handle response from guzzlehttp client
+     * 
+     * @param GuzzleHttp\Psr7\Response $response
+     * 
+     * @return void
+     */
+    public function handleResponse(Response $response) : void
     {
         if($response->getStatusCode() < 200 || $response->getStatusCode() > 299) {
             $this->dispatchErrorForStatusCode($response->getStatusCode());
@@ -107,7 +120,7 @@ class Client {
      * @throws Musti\ForgeApi\Exceptions\ForgeOfflineException
      * @throws \Exception
      */
-    public function dispatchErrorForStatusCode(int $code)
+    public function dispatchErrorForStatusCode(int $code) : void
     {
         match($code) {
             400 => throw new BadRequestException("Bad Request"),

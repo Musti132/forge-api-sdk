@@ -2,13 +2,6 @@
 
 namespace Musti\ForgeApi\Traits;
 
-use Musti\ForgeApi\Exceptions\BadRequestException;
-use Musti\ForgeApi\Exceptions\ForgeOfflineException;
-use Musti\ForgeApi\Exceptions\InternalServerErrorException;
-use Musti\ForgeApi\Exceptions\InvalidAPIKeyException;
-use Musti\ForgeApi\Exceptions\NotFoundException;
-use Musti\ForgeApi\Exceptions\TooManyRequestsException;
-use Musti\ForgeApi\Exceptions\UnprocessableEntityException;
 use Musti\ForgeApi\Forge;
 use Musti\ForgeApi\Http\Client;
 use Musti\ForgeApi\Http\ClientSingleton;
